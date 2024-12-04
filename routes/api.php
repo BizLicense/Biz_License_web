@@ -44,6 +44,7 @@ Route::post('/register', [RegisterController::class, 'store']);
 Route::post('/rest-password', [PasswordResetLinkController::class, 'store']);
 
 Route::delete('user/delete', [ProfileController::class, 'destroy']);
+Route::get('user/all/{id}', [ProfileController::class, 'showAllUsers']);
 
 Route::post('user-restore/{id}', [AuthController::class, 'restore'])
 ->middleware(['signed'])
@@ -97,7 +98,7 @@ Route::middleware(['auth:sanctum','verified'])->group(function () {
     Route::put('profile/update-password', [ProfileController::class, 'updatePassword'])->middleware('auth:sanctum');
     Route::put('profile/change-address', [ProfileController::class, 'updateAddress']);
 
-   
+
     //settings
     Route::prefix('setting')->group(function () {
         Route::get('tax-setting', [TaxSettingController::class, 'index']);
@@ -121,7 +122,7 @@ Route::middleware(['auth:sanctum','verified'])->group(function () {
 
     Route::middleware('user.subscribe')->group(function () {
     Route::post('/subscription/change',[SubscriptionController::class, 'changeSubscription']);
-    
+
     });
     Route::prefix('certificates')->group(function () {
     Route::get('/', [CertificateController::class, 'index'])->middleware('auth:sanctum');
@@ -134,11 +135,11 @@ Route::middleware(['auth:sanctum','verified'])->group(function () {
 
 });
     Route::prefix('certificates')->group(function () {
-        
+
         Route::post('create', [CertificateController::class, 'store'])->middleware('auth:sanctum');
         Route::post('{id}/notes/create', [CertificateController::class, 'storeNote'])->middleware('auth:sanctum');
         Route::post('{note_id}/notes/update', [CertificateController::class, 'updateNote'])->middleware('auth:sanctum');
-        Route::post('{id}/files/{file_id}/delete', [CertificateController::class, 'deleteFileImage'])->middleware('auth:sanctum'); 
+        Route::post('{id}/files/{file_id}/delete', [CertificateController::class, 'deleteFileImage'])->middleware('auth:sanctum');
         Route::post('{id}/notes/delete',[CertificateController::class,'deleteNote'])->middleware('auth:sanctum');
         Route::post('{id}/update', [CertificateController::class, 'update'])->middleware('auth:sanctum');
         Route::post('{id}/update-status', [CertificateController::class, 'updateStatus'])->middleware('auth:sanctum');

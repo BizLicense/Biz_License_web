@@ -61,7 +61,7 @@ class AuthController extends Controller
         //         ->quantity($limitedCertificateCount)
         //         ->create();
         // }
-        
+
         return responseJson(true, 'login Success', $data, 200);
 
     }

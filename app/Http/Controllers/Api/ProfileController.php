@@ -231,4 +231,25 @@ class ProfileController extends Controller
         $user->delete();
         return responseJson(true, 'success deleted account', $user);
     }
+
+  public function showAllUsers($id)
+    {
+
+
+        $user = User::select('id', 'first_name', 'last_name', 'email', 'phone', 'image', 'registered_address', 'trading_name', 'company_name', 'registration_number', 'number_street_name', 'city', 'postal_code', 'country_id', 'vat_number', 'has_vat')
+            ->where('id', $id)
+            ->with('userEmail')
+            ->with('country', 'logo')
+            ->withCount('certificate')
+            ->first();
+        //  $subscriptionStatus = $user->status_subscription;
+        $data = [
+            'user' => $user,
+            // 'subscription_status'=>$subscriptionStatus,
+
+        ];
+
+        return   responseJson(true, 'user details', $data);
+
+  }
 }
